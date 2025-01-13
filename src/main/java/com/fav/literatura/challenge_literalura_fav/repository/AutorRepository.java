@@ -14,6 +14,6 @@ public interface AutorRepository extends JpaRepository<Autor, Long> {
     @Query("SELECT a FROM Autor a WHERE a.fechaNacimiento < :anioAutor AND a.fechaFallecido > :anioAutor")
     List<Autor> buscarAutoresVivosPorAnio(int anioAutor);
 
-    @Query("SELECT a FROM Autor a WHERE a.nombre LIKE %:nombreAutor%")
+    @Query("SELECT a FROM Autor a WHERE a.nombre ILIKE %:nombreAutor%")
     List<Autor> buscarAutorPorNombre(String nombreAutor);
 }

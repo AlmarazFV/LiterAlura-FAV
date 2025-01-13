@@ -228,13 +228,21 @@ public class Principal {
         if (autorBuscado.isEmpty()) {
             System.out.println("No se encontraron autores registrados.");
         } else {
-            System.out.printf("El autor encontrado de nombre '%s' es el siguiente:\n", nombreAutor);
+            System.out.printf("El autor o los autores encontrados con el nombre '%s' son los siguientes:\n", nombreAutor);
             for (Autor autor : autorBuscado) {
                 List<Libro> librosPorAutorId = libroServicio.buscarLibrosPorAutorId(autor.getId());
+
+                String fechaNacimiento = (autor.getFechaNacimiento() != null)
+                        ? autor.getFechaNacimiento().toString()
+                        : "Desconocida";
+                String fechaFallecimiento = (autor.getFechaFallecido() != null)
+                        ? autor.getFechaFallecido().toString()
+                        : "Desconocida";
+
                 System.out.println("----- AUTOR -----");
                 System.out.println("Autor: " + autor.getNombre());
-                System.out.println("Fecha de Nacimiento: " + autor.getFechaNacimiento());
-                System.out.println("Fecha de Fallecimiento: " + autor.getFechaFallecido());
+                System.out.println("Fecha de Nacimiento: " + fechaNacimiento);
+                System.out.println("Fecha de Fallecimiento: " + fechaFallecimiento);
 
                 if (librosPorAutorId.isEmpty()) {
                     System.out.println("No se encontraron libros registrados para este autor.");
@@ -243,9 +251,11 @@ public class Principal {
                             .map(Libro::getTitulo)
                             .collect(Collectors.joining(", "));
                     System.out.println("Libros: [" + librosRegistrados + "]");
-                    System.out.println("-----------------\n");
                 }
+                System.out.println("-----------------\n");
             }
         }
     }
+
 }
+
